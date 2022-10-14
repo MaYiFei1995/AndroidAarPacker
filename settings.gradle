@@ -1,0 +1,34 @@
+import org.gradle.api.initialization.resolve.RepositoriesMode
+
+pluginManagement {
+
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.namespace == "com.mai.aar-packer") {
+                useModule("com.mai.aar-packer:aar-packer:${requested.version}")
+            }
+        }
+    }
+
+    repositories {
+        mavenLocal()
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
+    repositories {
+        google()
+        mavenCentral()
+        mavenLocal()
+        flatDir {
+            dirs './sample/libs/'
+        }
+    }
+}
+rootProject.name = "AarPacker"
+include ':app'
+include ':plugin'
+include ':sample'

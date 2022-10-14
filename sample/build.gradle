@@ -1,0 +1,62 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'com.mai.aar-packer.aar-packer' version '1.0'
+}
+
+android {
+    compileSdk 32
+
+    defaultConfig {
+        minSdk 21
+        targetSdk 32
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    flavorDimensions += "default"
+    productFlavors {
+        normal {
+        }
+        special {
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        buildConfig = false
+    }
+}
+
+aarpacker {
+    verboseLog true
+    ignoreAndroidSupport true
+    ignoreDependencies 'com.android.support:appcompat-v7:28.0.0', 'junit:junit:4.12', 'androidx.test.ext:junit:1.1.1', 'androidx.test.espresso:espresso-core:3.2.0', '^com.android.*'
+}
+
+dependencies {
+    implementation 'com.android.support:appcompat-v7:26.0.0'
+    implementation 'com.android.support:design:26.0.0'
+    implementation "com.android.support:support-v4:26.0.0"
+    implementation 'com.android.support.constraint:constraint-layout:2.0.4'
+
+    // allFlavor
+    embedded(name: 'glide-4.9.0', ext: 'aar')
+    // normal
+    normalEmbedded(name: 'okhttputils-2.6.2', ext: 'aar')
+    // special
+    specialEmbedded(name: 'picasso-2.8', ext: 'aar')
+}
