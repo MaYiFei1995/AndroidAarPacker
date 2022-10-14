@@ -6,7 +6,7 @@
 
 #### 第一步，添加插件
 
-##### 演示工程发布到 MavenLocal
+##### 插件发布到 MavenLocal
 
 执行 `gradle :plguin/publishToMavenLocal`，发布到本地仓库
 
@@ -85,7 +85,7 @@ dependencies {
 
 按照flavor执行assemble命令，输出在`build/output/aar/`
 
-**使用方法详见[:sample]**
+**使用方法详见[[:sample]](./sample/build.gradle)**
 
 ## 特性
 
