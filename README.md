@@ -87,6 +87,30 @@ dependencies {
 
 **使用方法详见[[:sample]](./sample/build.gradle)**
 
+#### 第四步，publish 到 maven
+
+发布到`maven`时，需要参照[disabling-gmm-publication](https://docs.gradle.org/current/userguide/publishing_gradle_module_metadata.html#sub:disabling-gmm-publication)关闭 Metadata 的生成，并移除本地的`dependencies`，如：
+
+```grooxy
+fterEvaluate {
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                pom.withXml {
+                    Node pomNode = asNode()
+                    // remove <dependencies> node
+                    pomNode.remove(pomNode["dependencies"])
+                    // or remove only local aar
+                    pomNode.dependencies.dependency.each() { node ->
+                        if(node.type.text() == 'aar') {
+                            node.parent().remove(node)
+                        }
+                    }
+                }
+    //...
+    
+```
+
 ## 特性
 
 ##### 支持 productFlavors 配置
